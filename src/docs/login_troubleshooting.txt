@@ -1,0 +1,11 @@
+Login Troubleshooting Guide
+
+If users cannot login, verify their username and password.
+
+Check internet connectivity.
+
+Clear browser cache and cookies.
+
+If login still fails, reset the password using the password reset option.
+
+Contact support if the account remains inaccessible.

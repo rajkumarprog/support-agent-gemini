@@ -1,0 +1,10 @@
+User Management Guide
+
+Administrators can:
+
+- Create users
+- Disable accounts
+- Assign roles
+- Reset passwords
+
+Role-based access controls determine user permissions.

@@ -1,0 +1,13 @@
+API Authentication Failure
+
+Possible causes:
+- Invalid API key
+- Expired access token
+- Incorrect authorization header
+- Missing credentials
+
+Troubleshooting:
+1. Verify API key.
+2. Regenerate token if expired.
+3. Check request headers.
+4. Review API logs for authentication errors.

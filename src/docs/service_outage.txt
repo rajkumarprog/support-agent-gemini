@@ -1,0 +1,11 @@
+Service Outage Guide
+
+Service outages may affect application access and API functionality.
+
+During an outage:
+
+- Check the status page.
+- Monitor official announcements.
+- Avoid repeated login attempts.
+
+Services are restored as quickly as possible.

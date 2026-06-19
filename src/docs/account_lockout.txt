@@ -1,0 +1,11 @@
+Account Lockout Policy
+
+Accounts are temporarily locked after 5 failed login attempts.
+
+To regain access:
+
+1. Wait 15 minutes.
+2. Reset your password.
+3. Contact support if the problem continues.
+
+Repeated lockouts may indicate unauthorized access attempts.

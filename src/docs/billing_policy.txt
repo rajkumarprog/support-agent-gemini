@@ -1,0 +1,7 @@
+Billing Policy
+
+Subscriptions are billed monthly.
+
+Payments are non-refundable after the billing cycle begins.
+
+Customers can cancel anytime before renewal.

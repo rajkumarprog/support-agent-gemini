@@ -1,0 +1,11 @@
+Security Policy
+
+Customer data is protected using encryption and secure authentication methods.
+
+Security recommendations:
+
+- Enable two-factor authentication.
+- Use strong passwords.
+- Avoid sharing account credentials.
+
+Report suspicious activity immediately.

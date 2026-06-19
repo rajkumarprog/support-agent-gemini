@@ -1,0 +1,10 @@
+Subscription FAQ
+
+Q: How do I upgrade my plan?
+A: Open Account Settings and select Upgrade Plan.
+
+Q: Can I cancel anytime?
+A: Yes, subscriptions can be canceled at any time.
+
+Q: When does cancellation take effect?
+A: At the end of the current billing cycle.
