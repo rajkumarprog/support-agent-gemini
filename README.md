@@ -5,7 +5,7 @@ A command-line customer-support assistant written in Python. It reads a customer
 ## Features
 
 - **Persona detection** – classifies the user as *Technical Expert*, *Frustrated User* or *Business Executive* and adjusts the tone of the answer
-- **Document retrieval** – picks the relevant support document (refunds, billing, login, account lockout, API authentication, subscriptions, security, user management, outages)
+- **Document retrieval** – picks the relevant support document (refunds, billing, password reset, login, account lockout, API authentication, subscriptions, security, user management, outages)
 - **Grounded answers** – Gemini answers only from the retrieved document
 - **Escalation rules** – billing, refund, legal and account-compromise questions are flagged for a human
 - **Handoff summary** – produces a structured summary (persona, issue, documents used, recommendation) for the human agent
@@ -33,10 +33,16 @@ Copy `.env.example` to `.env` and add your free key from [Google AI Studio](http
 GEMINI_API_KEY=your_api_key_here
 ```
 
-Run it **from the project root**:
+Run it:
 
 ```bash
 python src/app.py
+```
+
+Run the unit tests (no API key needed):
+
+```bash
+python -m pytest -q
 ```
 
 ### Example
@@ -63,12 +69,14 @@ src/
     escalation.py        # escalation rules
     handoff.py           # human handoff summary
     *.txt                # support knowledge-base documents
+tests/
+  test_logic.py          # unit tests for persona, retrieval, escalation, handoff
 ```
 
 ## Limitations and next steps
 
 - Persona detection and retrieval are keyword-based; embeddings would handle paraphrased questions better
-- Add unit tests for persona, retrieval and escalation logic
+- Move the Python modules out of `src/docs/` into their own package, separate from the knowledge-base files
 - Wrap the agent in a small web API or UI
 
 ## Author
