@@ -58,9 +58,12 @@ Document:
 Question:
 {question}
 """
-        response = model.generate_content(prompt)
-        print("\nAnswer:")
-        print(response.text)
+        try:
+            response = model.generate_content(prompt)
+            print("\nAnswer:")
+            print(response.text)
+        except Exception as exc:
+            print("\nCould not get an answer from Gemini:", exc)
 
     if should_escalate(question) or doc_name is None:
         print("\nESCALATION REQUIRED")
