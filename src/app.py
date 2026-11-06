@@ -1,36 +1,56 @@
-from dotenv import load_dotenv
 import os
-import google.generativeai as genai
 
-from docs.persona import detect_persona
+import google.generativeai as genai
+from dotenv import load_dotenv
+
 from docs.escalation import should_escalate
 from docs.handoff import create_handoff
+from docs.persona import detect_persona
 from docs.retrieval import retrieve_document
 
-load_dotenv()
+# Tone guidance for each detected persona, so answers actually adapt to the user.
+PERSONA_TONE = {
+    "Technical Expert": "Be precise and technical. Include exact steps and settings.",
+    "Frustrated User": "Be calm and empathetic. Acknowledge the problem first, then give short, simple steps.",
+    "Business Executive": "Be brief and outcome-focused. Lead with the answer and its impact.",
+}
 
-api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=api_key)
 
-model = genai.GenerativeModel("models/gemini-2.5-flash")
+def main():
+    load_dotenv()
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        print("GEMINI_API_KEY is missing. Copy .env.example to .env and add your key.")
+        return
 
-name = input("Enter your name: ")
-print("Welcome", name)
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("models/gemini-2.5-flash")
 
-question = input("Ask a question: ")
+    name = input("Enter your name: ")
+    print("Welcome", name)
 
-persona = detect_persona(question)
+    question = input("Ask a question: ").strip()
+    if not question:
+        print("Please enter a question.")
+        return
 
-print("\nDetected Persona:", persona)
+    persona = detect_persona(question)
+    print("\nDetected Persona:", persona)
 
-doc_name, doc_content = retrieve_document(question)
+    doc_name, doc_content = retrieve_document(question)
 
-print("\nRetrieved Source:", doc_name)
+    if doc_name is None:
+        print("\nNo matching support document was found for this question.")
+    else:
+        print("\nRetrieved Source:", doc_name)
 
-prompt = f"""
+        prompt = f"""
 You are a customer support agent.
 
-Use ONLY the following support document.
+Tone: {PERSONA_TONE.get(persona, "")}
+
+Use ONLY the following support document. If it does not answer the question,
+say so and suggest contacting support.
 
 Document:
 {doc_content}
@@ -38,20 +58,15 @@ Document:
 Question:
 {question}
 """
+        response = model.generate_content(prompt)
+        print("\nAnswer:")
+        print(response.text)
 
-response = model.generate_content(prompt)
+    if should_escalate(question) or doc_name is None:
+        print("\nESCALATION REQUIRED")
+        print("\nHandoff Summary:")
+        print(create_handoff(persona, question, doc_name))
 
-print("\nAnswer:")
-print(response.text)
 
-if should_escalate(question):
-    print("\nESCALATION REQUIRED")
-
-    handoff = create_handoff(
-        persona,
-        question,
-        doc_name
-    )
-
-    print("\nHandoff Summary:")
-    print(handoff)
+if __name__ == "__main__":
+    main()
